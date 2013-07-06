@@ -491,19 +491,15 @@ for page in gen:
     log(name)
     try:
         parsed = mwparserfromhell.parse(page.text)
-        f = False
+        if not parsed.filter_templates():
+            log('No templates, skipping.')
+            continue
         for template in parsed.filter_templates():
-            f = True
             param = 'hi'
             while template.has_param(param):
                 param += 'i'
             template.add(param, 'test')
             template.remove(param)
-            break # Only test on one template
-        if not f:
-            # No templates?
-            log('No templates, skipping.')
-            continue
 
     except:
         log(name, lf=errors)
