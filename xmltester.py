@@ -468,16 +468,16 @@ path = '/public/datasets/public/{0}/'.format(wikiname)
 dates = [int(x) for x in os.listdir(path)]
 date = str(max(dates))
 path += '{0}/{1}-{0}-pages-articles.xml.bz2'.format(date, wikiname)
-logfile = os.path.expanduser('~/mwp-test-{0}.log'.format(wikiname))
-badfile = os.path.expanduser('~/mwp-bad-{0}.log'.format(wikiname))
-errors = os.path.expanduser('~/mwp-err-{0}.log'.format(wikiname))
+logfile = os.path.expanduser('~/mwp_logs/{0}-info.log'.format(wikiname))
+badfile = os.path.expanduser('~/mwp_logs/{0}-fail.log'.format(wikiname))
+errors = os.path.expanduser('~/mwp_logs/{0}-err.log'.format(wikiname))
 
 
 def log(text, lf=logfile):
     with open(lf, 'a') as f:
         if '\n' in text:
             for line in text.splitlines():
-                log(line)
+                log(line, lf)
         else:
             f.write(unicode(datetime.datetime.utcnow()) + u': ' + repr(text.strip()) + u'\n')
 log('Starting run.')
